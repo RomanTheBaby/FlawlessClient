@@ -701,17 +701,16 @@
             </objects>
             <point key="canvasLocation" x="75" y="250"/>
         </scene>
-        <!--View Controller-->
+        <!--Alone Chat View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="TestClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="AloneChatViewController" customModule="TestClient" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="356"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3go-QX-faX">
-                                <rect key="frame" x="20" y="20" width="555" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3go-QX-faX">
+                                <rect key="frame" x="20" y="20" width="359" height="22"/>
                                 <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Enter Message" drawsBackground="YES" id="VNa-5Y-VdV">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -721,15 +720,77 @@
                                     <action selector="actionSendMessage:" target="XfG-lQ-9wD" id="uEj-vf-yRL"/>
                                 </connections>
                             </textField>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="caB-RR-RDc">
+                                <rect key="frame" x="20" y="50" width="560" height="286"/>
+                                <clipView key="contentView" id="DJu-Jn-viH">
+                                    <rect key="frame" x="1" y="1" width="558" height="284"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="35p-iy-KRL">
+                                            <rect key="frame" x="0.0" y="0.0" width="558" height="284"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="558" height="284"/>
+                                            <size key="maxSize" width="578" height="10000000"/>
+                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Dzx-D6-gzu">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="GUr-66-gpH">
+                                    <rect key="frame" x="543" y="1" width="16" height="284"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Id5-w2-pEn">
+                                <rect key="frame" x="494" y="13" width="92" height="32"/>
+                                <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ueu-Ai-ffC">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="actionConnect:" target="XfG-lQ-9wD" id="zr4-ae-f9i"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nag-mX-Hm3">
+                                <rect key="frame" x="393" y="13" width="101" height="32"/>
+                                <buttonCell key="cell" type="push" title="Disconect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XHN-O1-crj">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="actionDisconnect:" target="XfG-lQ-9wD" id="W33-3D-Rt0"/>
+                                </connections>
+                            </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="Nag-mX-Hm3" firstAttribute="leading" secondItem="3go-QX-faX" secondAttribute="trailing" constant="20" id="92M-xY-IHE"/>
+                            <constraint firstAttribute="trailing" secondItem="caB-RR-RDc" secondAttribute="trailing" constant="20" id="Eid-Jy-2EB"/>
+                            <constraint firstItem="3go-QX-faX" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="HaL-f3-b5u"/>
+                            <constraint firstItem="caB-RR-RDc" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="Sm3-Ex-I1I"/>
+                            <constraint firstItem="3go-QX-faX" firstAttribute="top" secondItem="caB-RR-RDc" secondAttribute="bottom" constant="8" id="XQv-ho-pEX"/>
+                            <constraint firstAttribute="bottom" secondItem="Id5-w2-pEn" secondAttribute="bottom" constant="20" id="bLq-S2-jm6"/>
+                            <constraint firstAttribute="bottom" secondItem="3go-QX-faX" secondAttribute="bottom" constant="20" id="e6t-Hb-UrA"/>
+                            <constraint firstItem="caB-RR-RDc" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="iPr-uS-y0V"/>
+                            <constraint firstAttribute="bottom" secondItem="Nag-mX-Hm3" secondAttribute="bottom" constant="20" id="v35-TU-h0U"/>
+                            <constraint firstAttribute="trailing" secondItem="Id5-w2-pEn" secondAttribute="trailing" constant="20" id="wY2-5K-gZm"/>
+                            <constraint firstItem="Id5-w2-pEn" firstAttribute="leading" secondItem="Nag-mX-Hm3" secondAttribute="trailing" constant="12" id="wdr-Az-C76"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="connectButton" destination="Id5-w2-pEn" id="qnW-cg-Tgl"/>
+                        <outlet property="disconnectButton" destination="Nag-mX-Hm3" id="I2V-PU-BwF"/>
                         <outlet property="inputTextField" destination="3go-QX-faX" id="zLu-sE-SKd"/>
+                        <outlet property="logTextView" destination="35p-iy-KRL" id="276-Sb-Um4"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="693"/>
         </scene>
     </scenes>
 </document>

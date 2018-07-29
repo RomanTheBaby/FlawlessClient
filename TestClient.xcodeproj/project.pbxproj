@@ -8,23 +8,29 @@
 
 /* Begin PBXBuildFile section */
 		0921BF762104CF7200130899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0921BF752104CF7200130899 /* AppDelegate.swift */; };
-		0921BF782104CF7200130899 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0921BF772104CF7200130899 /* ViewController.swift */; };
 		0921BF7A2104CF7400130899 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0921BF792104CF7400130899 /* Assets.xcassets */; };
 		0921BF7D2104CF7400130899 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0921BF7B2104CF7400130899 /* Main.storyboard */; };
 		093FDBB02107BA7B00816A15 /* NSViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093FDBAE2107BA7B00816A15 /* NSViewController+Extension.swift */; };
 		095F7928210C49BD001660E8 /* SocketThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F7927210C49BD001660E8 /* SocketThread.swift */; };
+		09D27272210DABE3005DBBA0 /* AloneChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D27271210DABE3005DBBA0 /* AloneChatViewController.swift */; };
+		09D27275210DAC4D005DBBA0 /* AloneChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D27273210DAC4D005DBBA0 /* AloneChatViewModel.swift */; };
+		09EB39EA210DD96400BB299B /* NSError+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB39E8210DD96400BB299B /* NSError+Extension.swift */; };
+		09EB39F3210DDF7B00BB299B /* NSTextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09EB39F1210DDF7B00BB299B /* NSTextView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0921BF722104CF7200130899 /* TestClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0921BF752104CF7200130899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0921BF772104CF7200130899 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0921BF792104CF7400130899 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0921BF7C2104CF7400130899 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0921BF7E2104CF7400130899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0921BF7F2104CF7400130899 /* TestClient.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TestClient.entitlements; sourceTree = "<group>"; };
 		093FDBAE2107BA7B00816A15 /* NSViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSViewController+Extension.swift"; sourceTree = "<group>"; };
 		095F7927210C49BD001660E8 /* SocketThread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketThread.swift; sourceTree = "<group>"; };
+		09D27271210DABE3005DBBA0 /* AloneChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AloneChatViewController.swift; sourceTree = "<group>"; };
+		09D27273210DAC4D005DBBA0 /* AloneChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AloneChatViewModel.swift; sourceTree = "<group>"; };
+		09EB39E8210DD96400BB299B /* NSError+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Extension.swift"; sourceTree = "<group>"; };
+		09EB39F1210DDF7B00BB299B /* NSTextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				093FDBAE2107BA7B00816A15 /* NSViewController+Extension.swift */,
+				09EB39E8210DD96400BB299B /* NSError+Extension.swift */,
+				09EB39F1210DDF7B00BB299B /* NSTextView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -111,7 +119,8 @@
 		095F792C210CAE9E001660E8 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0921BF772104CF7200130899 /* ViewController.swift */,
+				09D27271210DABE3005DBBA0 /* AloneChatViewController.swift */,
+				09D27273210DAC4D005DBBA0 /* AloneChatViewModel.swift */,
 				0921BF7B2104CF7400130899 /* Main.storyboard */,
 			);
 			path = Controllers;
@@ -192,10 +201,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0921BF782104CF7200130899 /* ViewController.swift in Sources */,
+				09D27272210DABE3005DBBA0 /* AloneChatViewController.swift in Sources */,
+				09EB39F3210DDF7B00BB299B /* NSTextView+Extensions.swift in Sources */,
 				093FDBB02107BA7B00816A15 /* NSViewController+Extension.swift in Sources */,
+				09D27275210DAC4D005DBBA0 /* AloneChatViewModel.swift in Sources */,
 				095F7928210C49BD001660E8 /* SocketThread.swift in Sources */,
 				0921BF762104CF7200130899 /* AppDelegate.swift in Sources */,
+				09EB39EA210DD96400BB299B /* NSError+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
