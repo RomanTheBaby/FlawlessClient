@@ -24,7 +24,7 @@ class AloneChatViewController: NSViewController {
 
     @IBAction func actionSendMessage(_ sender: NSTextField) {
         guard !sender.stringValue.isEmpty else { return }
-        viewModel.sendMessage(sender.stringValue)
+        viewModel.sendMessage(sender.stringValue.trimmingCharacters(in: .whitespacesAndNewlines))
         sender.stringValue = ""
     }
 

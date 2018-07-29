@@ -19,7 +19,6 @@ final class SocketThread: Thread {
     private var inputStream: InputStream?
     private var outputStream: OutputStream?
     private var dataToSend: [Data]
-//    private var receivedData: [Data]
     private let maxDataLength: Int
     private let host: String
     private var currentOffset: Int
@@ -34,14 +33,7 @@ final class SocketThread: Thread {
         super.init()
     }
 
-    func sendMessage(_ message: String) {
-        guard let messageData = message.data(using: .utf8) else { return }
-
-        dataToSend.insert(messageData, at: 0)
-
-        let dataBytes = [UInt8](message.data(using: .utf8)!)
-        outputStream?.write(dataBytes, maxLength: dataBytes.count)
-    }
+    // MARK: - Public Methods
 
     func startClient() {
         do {
@@ -66,6 +58,17 @@ final class SocketThread: Thread {
         CFSocketInvalidate(self.socket);
         CFRunLoopStop(CFRunLoopGetCurrent());
     }
+
+    func sendMessage(_ message: String) {
+        guard let messageData = message.data(using: .utf8) else { return }
+
+//        dataToSend.insert(messageData, at: 0)
+
+        let dataBytes = [UInt8](message.data(using: .utf8)!)
+        outputStream?.write(dataBytes, maxLength: dataBytes.count)
+    }
+
+    // MARK: - Private Methods
 
     private func initializeClient() throws {
         var context = CFSocketContext(version: 0, info: Unmanaged.passRetained(self).toOpaque(), retain: nil, release: nil, copyDescription: nil)
