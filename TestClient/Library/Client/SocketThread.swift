@@ -18,7 +18,6 @@ final class SocketThread: Thread {
     private var socket: CFSocket!
     private var inputStream: InputStream?
     private var outputStream: OutputStream?
-    private var dataToSend: [Data]
     private let maxDataLength: Int
     private let host: String
     private var currentOffset: Int
@@ -27,7 +26,6 @@ final class SocketThread: Thread {
 
     init(hostAdress: String = "127.0.0.1", maxDataSize: Int = 1024) {
         host = hostAdress
-        dataToSend = []
         maxDataLength = maxDataSize
         currentOffset = 0
         super.init()
@@ -49,21 +47,18 @@ final class SocketThread: Thread {
                            socketLoopSource,
                            .defaultMode)
 
-        print("Run in loop")
+        delegate?.didReceiveMessage("Socket connected...")
         CFRunLoopRun();
     }
 
     func stopClient() {
         guard socket != nil else { return }
         CFSocketInvalidate(self.socket);
+        delegate?.didReceiveMessage("Socket disconnected...")
         CFRunLoopStop(CFRunLoopGetCurrent());
     }
 
     func sendMessage(_ message: String) {
-        guard let messageData = message.data(using: .utf8) else { return }
-
-//        dataToSend.insert(messageData, at: 0)
-
         let dataBytes = [UInt8](message.data(using: .utf8)!)
         outputStream?.write(dataBytes, maxLength: dataBytes.count)
     }
@@ -71,8 +66,11 @@ final class SocketThread: Thread {
     // MARK: - Private Methods
 
     private func initializeClient() throws {
-        var context = CFSocketContext(version: 0, info: Unmanaged.passRetained(self).toOpaque(), retain: nil, release: nil, copyDescription: nil)
-        //{ 0, CFBridgingRetain(self), nil, nil, nil}
+        var context = CFSocketContext(version: 0,
+                                      info: Unmanaged.passRetained(self).toOpaque(), // so we could access `self` context from pure method
+                                      retain: nil,
+                                      release: nil,
+                                      copyDescription: nil)
         guard let clientSocket = CFSocketCreate(
             kCFAllocatorDefault,
             PF_INET,
@@ -135,9 +133,6 @@ final class SocketThread: Thread {
     }
 
     private func socketConnected(withHandle socketHandle: CFSocketNativeHandle) {
-        dataToSend = []
-        currentOffset = 0
-
         var readStream: Unmanaged<CFReadStream>?
         var writeStream: Unmanaged<CFWriteStream>?
         CFStreamCreatePairWithSocket(kCFAllocatorDefault, socketHandle, &readStream, &writeStream)
@@ -162,40 +157,20 @@ final class SocketThread: Thread {
     }
 
     private func readReceivedData(fromStream inputStream: InputStream) {
-        let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: maxDataLength)
-
-        let dataLength = inputStream.read(buffer, maxLength: maxDataLength)
+        var buffer = [UInt8](repeating: 0, count: maxDataLength)
+        let dataLength = inputStream.read(&buffer, maxLength: maxDataLength)
 
         if
-            dataLength > 0,
-            let receivedMessage = String(bytesNoCopy: buffer, length: dataLength, encoding: .utf8, freeWhenDone: true) {
-            delegate?.didReceiveMessage(receivedMessage)
+            dataLength > 0 {
+            let message = NSString(bytes: buffer, length: dataLength, encoding: String.Encoding.utf8.rawValue)
+            print("Did receive message: ", message)
+
+            delegate?.didReceiveMessage((message as? String) ?? "lel")
         } else if dataLength < 0 {
             let error = inputStream.streamError
             let outputError = NSError.describing(error?.localizedDescription ?? "Unknown error happened")
             delegate?.didReceiveError(error: outputError)
         }
-    }
-
-    private func writeData(toStream outputStream: OutputStream) {
-        guard !dataToSend.isEmpty, let data = dataToSend.last else { return }
-        var dataBytes = [UInt8](data)
-        dataBytes.append(UInt8(currentOffset))
-
-        let length = data.count - currentOffset > maxDataLength ? maxDataLength : data.count - currentOffset
-        let sentLength = outputStream.write(dataBytes, maxLength: length)
-
-        if sentLength > 0 {
-            currentOffset += sentLength
-
-            if currentOffset == data.count {
-                dataToSend.removeLast()
-                currentOffset = 0
-            }
-        } else if sentLength < 0 {
-            let error = outputStream.streamError
-            let outputError = NSError.describing(error?.localizedDescription ?? "Unknown error happened")
-            delegate?.didReceiveError(error: outputError)        }
     }
 }
 
@@ -204,17 +179,11 @@ final class SocketThread: Thread {
 extension SocketThread: StreamDelegate {
     func stream(_ aStream: Stream, handle eventCode: Stream.Event) {
         switch eventCode {
-        case .hasSpaceAvailable:
-            writeData(toStream: aStream as! OutputStream)
         case .hasBytesAvailable:
             readReceivedData(fromStream: aStream as! InputStream)
-        case .openCompleted:
-            print("Did open stream")
         case .errorOccurred:
             let error = NSError.describing(aStream.streamError?.localizedDescription ?? "Unknown error")
             delegate?.didReceiveError(error: error)
-        case .endEncountered:
-            print("End")
         default:
             break
         }
