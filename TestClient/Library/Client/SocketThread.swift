@@ -161,11 +161,9 @@ final class SocketThread: Thread {
         let dataLength = inputStream.read(&buffer, maxLength: maxDataLength)
 
         if
-            dataLength > 0 {
-            let message = NSString(bytes: buffer, length: dataLength, encoding: String.Encoding.utf8.rawValue)
-            print("Did receive message: ", message)
-
-            delegate?.didReceiveMessage((message as? String) ?? "lel")
+            dataLength > 0,
+            let message = NSString(bytes: buffer, length: dataLength, encoding: String.Encoding.utf8.rawValue) {
+            delegate?.didReceiveMessage(message as String)
         } else if dataLength < 0 {
             let error = inputStream.streamError
             let outputError = NSError.describing(error?.localizedDescription ?? "Unknown error happened")
