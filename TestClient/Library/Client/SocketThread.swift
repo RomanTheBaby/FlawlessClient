@@ -47,7 +47,6 @@ final class SocketThread: Thread {
                            socketLoopSource,
                            .defaultMode)
 
-        delegate?.didReceiveMessage("Socket connected...")
         CFRunLoopRun();
     }
 
@@ -122,7 +121,7 @@ final class SocketThread: Thread {
 
         switch socketErr {
         case .success:
-            print("Connected to socket")
+            delegate?.didReceiveMessage("Connected to socket")
         case .error:
             throw NSError.describing("Failed to connet")
         case .timeout:
